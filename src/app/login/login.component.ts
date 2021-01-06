@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import {CommunicationService} from "../communication.service"
 
 @Component({
   selector: 'app-login',
@@ -8,19 +9,21 @@ import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-logi
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   title = 'angular-social-login';
   user: any;
   loggedIn = false;
   users: any = {};
-  constructor(private authService: SocialAuthService) {}
+  constructor(private authService: SocialAuthService,private communication: CommunicationService,) {}
 
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
-      console.log(user);
+      console.log("Pierwszy LOG: " + user);
       this.user = user;
       this.loggedIn = (user != null);
       if(this.loggedIn){
-      // username = user.name;
+        console.log("Wywolujacy LOG: " + user.email);
+        this.communication.checkUser(user.email);
       }
     });
   }
