@@ -1,0 +1,38 @@
+<div class="container bg-warning">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Welcome <br /> aplication Social Login</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="loggedIn">
+        <h4>{{ user?.name }}</h4>
+        <p>{{ user?.email }}</p>
+        <p>{{ loggedIn }}</p>
+        <img src="{{ user.photoUrl }}">
+
+      </div>  
+    </div>
+  </div>
+
+  <div class="row col-mx-auto">
+    <div class="col-md-4 ">
+      <button type="button" class="btn btn-danger btn-block" (click)="signInWithGoogle()">Login with Google</button>
+      <div *ngIf="loggedIn">
+        <button type="button" class="btn btn-danger btn-block" (click)="signOut()">Logout with Google</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 ">
+      <button type="button" class="btn btn-primary btn-block" >Login with Facebook</button>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+  </div>
+</div>  
+  
