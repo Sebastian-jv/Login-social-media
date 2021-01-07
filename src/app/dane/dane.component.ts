@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import { BazaService } from '../baza.service';
 
 
@@ -8,6 +9,8 @@ import { BazaService } from '../baza.service';
   styleUrls: ['./dane.component.css'],
 })
 export class DaneComponent implements OnInit {
+  constructor(private baza: BazaService) { }
+
   username = 'nazwaa';
   newUser =false;
   user: User = {
@@ -26,9 +29,7 @@ export class DaneComponent implements OnInit {
 };
   ngOnInit(): void {
   }
-  
-  constructor(private baza: BazaService) { }
-  
+
   getData(userN:string): void {
     this.username= "inny";
     this.username = userN;
