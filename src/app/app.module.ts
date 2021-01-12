@@ -10,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 
- const MY_GOOGLE_ID = "1035920008404-gsugot8tmevvkjme3en4u82ulkj8pn8n.apps.googleusercontent.com";
+ const MY_GOOGLE_ID = "624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com";
+ const MY_FB_ID ='226901532341982';
 
 @NgModule({
   declarations: [AppComponent,LoginComponent, DaneComponent],
@@ -20,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [DaneComponent,
+  providers: [
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -32,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('clientId'),
+            provider: new FacebookLoginProvider(MY_FB_ID),
           },
         ],
       } as SocialAuthServiceConfig,

@@ -9,66 +9,82 @@ import { BazaService } from '../baza.service';
   styleUrls: ['./dane.component.css'],
 })
 export class DaneComponent implements OnInit {
-  constructor(private baza: BazaService) { }
+    constructor(private baza: BazaService) { }
+    newUser = false;
+    userIn :boolean= false;
+    answerSave = '';
+    inUserName='';
+    firstLog=false;
+    
+    ngOnInit(): void {
+      this.baza.currentMessage.subscribe(msg => {
+        this.userIn = msg;
+        if(this.userIn){
+          this.baza.userName = this.baza.userName;
+          this.getData();
+        }
+      });
+      }
 
-  username = 'nazwaa';
-  newUser =false;
-  user: User = {
-    id: 0,
-    p0: '',
-    p1: '',
-    p2: '',
-    p3: '',
-    p4: '',
-    p5: '',
-    p6: '',
-    p7: '',
-    p8: '',
-    p9: '',
-    name: this.username,
-};
-  ngOnInit(): void {
+    user: User = {
+      id: 0,
+      p0: '',
+      p1: '',
+      p2: '',
+      p3: '',
+      p4: '',
+      p5: '',
+      p6: '',
+      p7: '',
+      p8: '',
+      p9: '',
+      name: 'no user',
+  };
+
+
+
+    getData(): void {
+      this.baza.getUser(this.baza.userName).subscribe((t_user:any) => {
+          if (Object.keys(t_user).length == 0) {
+              console.log('No user found!');
+              this.newUser =true;
+              this.firstLog = true;
+              this.addUser();
+              return;
+          }
+
+          this.user = t_user[0];
+
+          if(this.newUser){
+            this.user.p0 = '0';
+            this.newUser = false;
+          } 
+          else{
+            var x =parseInt(this.user.p0);
+            x+=1;
+            this.user.p0 = x.toString();
+          }
+          this.saveUser();
+      });
+  }
+  addUser(): void {
+    this.baza.addUser(this.baza.userName).subscribe(() => {
+        console.log('User added');
+        this.getData();
+    });
   }
 
-  getData(userN:string): void {
-    this.username= "inny";
-    this.username = userN;
-    console.log("Wywolujacy LOG2.5: " + this.username);
-    this.baza.getUser(this.username).subscribe((t_user:any) => {
-      console.log("Wywolujacy LOG3: " + this.username);
-        if (Object.keys(t_user).length == 0) {
-            console.log('No user found!');
-            this.newUser =true;
-            this.addUser();
-            return;
-        }
-
-        this.user = t_user[0];
-        this.user.name = this.username;
-        console.log(
-          "Wywolujacy LOG4: " + this.user.name);
-        if(this.newUser){
-          this.user.p0 = '0';
-          this.newUser = false;
-        } 
-        else{
-           var x =parseInt(this.user.p0);
-           x+=1;
-           this.user.p0 = x.toString();
-        }
-        console.log("Wywolujacy LOG5: " + this.user.name);
-        console.log("Wywolujacy LOG6: " + this.username);
-       
+  saveUser( ): void {
+    this.baza.putUser(this.user).subscribe( (change_user : any) => {
+    console.log(change_user.err);
+    if(change_user.err == 0)
+        this.answerSave = "Correct save";
+      else
+      this.answerSave = "Incorrect save";
+      console.log(this.answerSave);
     });
+  }
 }
-addUser(): void {
-  this.baza.addUser(this.username).subscribe(() => {
-      console.log('User added');
-      this.getData(this.username);
-  });
-}
-}
-
 export interface User {
   id: number;
   p0: string;
@@ -81,5 +97,5 @@ export interface User {
   p7: string;
   p8: string;
   p9: string;
-  name: string;
+  name:string;
 }

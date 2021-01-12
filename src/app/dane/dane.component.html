@@ -1,3 +1,4 @@
-<p>dane works!</p>
-<p>{{user.name}}</p>
-
+<div *ngIf="firstLog; then newUser else nextLog"></div>
+    <ng-template #newUser>Pierwsze logowanie</ng-template>
+    <ng-template #nextLog>Ilosc logowan: {{user.p0}}</ng-template>
+      

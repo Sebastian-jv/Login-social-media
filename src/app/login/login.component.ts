@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialAuthService, SocialUser } from "angularx-social-login";
+import { SocialAuthService} from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
-import {CommunicationService} from "../communication.service"
+import {BazaService} from '../baza.service'
 
 @Component({
   selector: 'app-login',
@@ -14,16 +14,14 @@ export class LoginComponent implements OnInit {
   user: any;
   loggedIn = false;
   users: any = {};
-  constructor(private authService: SocialAuthService,private communication: CommunicationService,) {}
+  constructor(private authService: SocialAuthService,private baza: BazaService) {}
 
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
-      console.log("Pierwszy LOG: " + user);
       this.user = user;
       this.loggedIn = (user != null);
       if(this.loggedIn){
-        console.log("Wywolujacy LOG: " + user.email);
-        this.communication.checkUser(user.email);
+        this.baza.sendUser(user.email,true);
       }
     });
   }
@@ -32,23 +30,19 @@ export class LoginComponent implements OnInit {
    
     });
   }
-  // signInWithGoogle(): void {
-  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((res) => {
-  //     if (this.users && this.users[res.email]) {
-  //       this.users[res.email].count += 1;
-  //     } else {
-  //       this.users[res.email] = {
-  //         count: 1,
-  //       };
-  //     }
-  //   });
-  // }
-
+ 
   signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((res) => {
+   
+    });;
   }
 
   signOut(): void {
-    this.authService.signOut();
+    this.authService.signOut(true);
+    sessionStorage.clear();
+    this.loggedIn = false;
+    this.baza.sendUser("no user",false);
+    this.user.name = "";
+    this.user.email = "";
   }
 }
