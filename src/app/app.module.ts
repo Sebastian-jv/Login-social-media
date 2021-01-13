@@ -9,9 +9,10 @@ import { DaneComponent } from './dane/dane.component';
 import { HttpClientModule } from '@angular/common/http';
 
 
+//Put your ID here
 
- const MY_GOOGLE_ID = "624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com";
- const MY_FB_ID ='226901532341982';
+ const MY_GOOGLE_ID = "";
+ const MY_FB_ID ='';
 
 @NgModule({
   declarations: [AppComponent,LoginComponent, DaneComponent],
