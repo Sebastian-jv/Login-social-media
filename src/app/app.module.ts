@@ -10,9 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 //Put your ID here
+//This ID is exemplery from  https://www.npmjs.com/package/angularx-social-login
 
- const MY_GOOGLE_ID = "";
- const MY_FB_ID ='';
+ const MY_GOOGLE_ID = "624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com";
+ const MY_FB_ID ='561602290896109';
 
 @NgModule({
   declarations: [AppComponent,LoginComponent, DaneComponent],
